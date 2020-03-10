@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Valid form</title>
+</head>
+
+<body>
+
+    <form name="siteInfo" action="https://fe.it-academy.by/TestForm.php">
+        Для внесения вашего сайта в каталог, заполните форму:<br>
+        Разработчики: <input type="text" name="razr"><span id="razrErr"></span><br>
+        Название сайта: <input type="text" name="title"><span id="titleErr"></span><br>
+        URL сайта: <input type="text" name="url"><span id="urlErr"></span><br>
+        Дата запуска сайта: <input type="text" name="date"><span id="dateErr"></span><br>
+        Посетителей в сутки: <input type="text" name="persons"><span id="personsErr"></span><br>
+        E-mail для связи: <input type="text" name="email"><span id="emailErr"></span><br>
+        Рубрика каталога:
+        <select name="rubric">
+            <option value="1">здоровье</option>
+            <option value="2">домашний уют</option>
+            <option value="3">бытовая техника</option>
+        </select><span id="rubricErr"></span><br>
+        Размещение:
+        <input id="location1" type="radio" name="location" value="1">бесплатное
+        <input type="radio" name="location" value="2">платное
+        <input type="radio" name="location" value="3">VIP
+        <span id="locationErr"></span><br>
+        Разрешить отзывы: <input type="checkbox" name="comments"><span id="commentsErr"></span><br>
+        Описание сайта:<br>
+        <textarea name="description"></textarea><span id="descriptionErr"></span><br>
+        <input type="submit" value="Опубликовать">
+    </form>
+
+    <script>
+        'use strict'
+
+        document.forms.siteInfo.razr.addEventListener('blur', () => validRazr(false))
+        document.forms.siteInfo.title.addEventListener('blur', () => validTitle(false))
+        document.forms.siteInfo.url.addEventListener('blur', () => validUrl(false))
+        document.forms.siteInfo.date.addEventListener('blur', () => validDate(false))
+        document.forms.siteInfo.persons.addEventListener('blur', () => validPersons(false))
+        document.forms.siteInfo.email.addEventListener('blur', () => validEmail(false))
+        document.forms.siteInfo.rubric.addEventListener('click', () => validRubric(false))
+        document.forms.siteInfo.comments.addEventListener('click', () => validComments(false))
+        document.forms.siteInfo.description.addEventListener('blur', () => validDescription(false))
+        document.forms.siteInfo.addEventListener('submit', formSubmit)
+
+        function validRazr(autoFocus) {
+            var errorCount = 0
+            var razrValue = document.forms.siteInfo.razr.value
+            if (!razrValue) {
+                document.getElementById('razrErr').innerHTML = 'Укажите разработчиков'
+                document.getElementById('razrErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.razr.focus()
+                }
+            } else {
+                document.getElementById('razrErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validTitle(autoFocus) {
+            var errorCount = 0
+            var titleValue = document.forms.siteInfo.title.value
+            if (!titleValue) {
+                document.getElementById('titleErr').innerHTML = 'Укажите название сайта'
+                document.getElementById('titleErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.title.value()
+                }
+            } else {
+                document.getElementById('titleErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validUrl(autoFocus) {
+            var errorCount = 0
+            var urlValue = document.forms.siteInfo.url.value
+            if (!urlValue) {
+                document.getElementById('urlErr').innerHTML = 'Укажите URL'
+                document.getElementById('urlErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.url.focus()
+                }
+            } else {
+                document.getElementById('urlErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validDate(autoFocus) {
+            var errorCount = 0
+            var dateValue = document.forms.siteInfo.date.value
+            if (!dateValue) {
+                document.getElementById('dateErr').innerHTML = 'Укажите дату'
+                document.getElementById('dateErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.date.focus()
+                }
+            } else {
+                document.getElementById('dateErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validPersons(autoFocus) {
+            var errorCount = 0
+            var personsValue = document.forms.siteInfo.persons.value
+            if (!personsValue) {
+                document.getElementById('personsErr').innerHTML = 'Укажите количество посетителей'
+                document.getElementById('personsErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.persons.focus()
+                }
+            } else {
+                document.getElementById('personsErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validEmail(autoFocus) {
+            var errorCount = 0
+            var emailValue = document.forms.siteInfo.email.value
+            if (!emailValue) {
+                document.getElementById('emailErr').innerHTML = 'Заполните Email'
+                document.getElementById('emailErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.email.focus()
+                }
+            } else {
+                document.getElementById('emailErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validRubric(autoFocus) {
+            var errorCount = 0
+            var rubricValue = document.forms.siteInfo.rubric.value
+            if (rubricValue == 1) {
+                document.getElementById('rubricErr').innerHTML = 'Данная рубрика недоступна для размещения'
+                document.getElementById('rubricErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.rubric.focus()
+                }
+            } else {
+                document.getElementById('rubricErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        var radioButton = document.forms.siteInfo.location
+        for (var i = 0; i < radioButton.length; i++) {
+            radioButton[i].addEventListener('click', () => validLocation(false))
+        }
+        function validLocation(autoFocus) {
+            var errorCount = 0
+            var locationValue = document.forms.siteInfo.location.value
+            if (locationValue == '') {
+                document.getElementById('locationErr').innerHTML = 'Выберите тип размещения'
+                document.getElementById('locationErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.getElementById('location1').scrollIntoView()
+                }
+            } else {
+                document.getElementById('locationErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validComments(autoFocus) {
+            var errorCount = 0
+            var commentsValue = document.forms.siteInfo.comments.checked
+            if (!commentsValue) {
+                document.getElementById('commentsErr').innerHTML = 'Разрешите отзывы о Вашем сайте'
+                document.getElementById('commentsErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.comments.focus()
+                }
+            } else {
+                document.getElementById('commentsErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function validDescription(autoFocus) {
+            var errorCount = 0
+            var descriptionValue = document.forms.siteInfo.description.value
+            if (!descriptionValue) {
+                document.getElementById('descriptionErr').innerHTML = 'Кратко опишите Ваш сайт'
+                document.getElementById('descriptionErr').style.color = 'red'
+                errorCount++
+                if (autoFocus) {
+                    document.forms.siteInfo.description.focus()
+                }
+            } else {
+                document.getElementById('descriptionErr').innerHTML = ''
+            }
+            return errorCount
+        }
+
+        function formSubmit() {
+            var errorCount = 0
+            errorCount += validRazr(!errorCount)
+            errorCount += validTitle(!errorCount)
+            errorCount += validUrl(!errorCount)
+            errorCount += validDate(!errorCount)
+            errorCount += validPersons(!errorCount)
+            errorCount += validEmail(!errorCount)
+            errorCount += validRubric(!errorCount)
+            errorCount += validLocation(!errorCount)
+            errorCount += validComments(!errorCount)
+            errorCount += validDescription(!errorCount)
+            if (errorCount) {
+                event.preventDefault()
+            }
+        }
+
+    </script>
+</body>
+
+</html>
